@@ -1,11 +1,34 @@
-# Ignore data & models
-data/
-model/
-*.pkl
-
-# Python cache
+# --------------------
+# Python / Conda
+# --------------------
 __pycache__/
 *.pyc
-
-# Env
+*.pyo
+*.pyd
 .env
+.venv
+env/
+venv/
+conda-env/
+
+# --------------------
+# OS
+# --------------------
+.DS_Store
+Thumbs.db
+
+# --------------------
+# IDE
+# --------------------
+.vscode/
+.idea/
+
+# --------------------
+# Data (too large to upload)
+# --------------------
+data/
+
+# --------------------
+# Logs
+# --------------------
+*.log
