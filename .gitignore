@@ -1,2 +1,11 @@
-# ?????? 
-data/*.pkl 
+# Ignore data & models
+data/
+model/
+*.pkl
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Env
+.env
