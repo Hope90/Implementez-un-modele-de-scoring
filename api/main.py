@@ -5,61 +5,53 @@ from pydantic import BaseModel
 import pandas as pd
 import joblib
 import json
-import numpy as np
 import os
 
 # ----------------------------
-# 初始化 FastAPI
+# Initialize FastAPI
 # ----------------------------
 app = FastAPI(title="Credit Scoring API")
 
 # ----------------------------
-# 加载模型和数据
+# Load model and metadata
 # ----------------------------
-MODEL_PATH = r"C:\Users\xwei3\OneDrive - TEN\Perso Info\DS\P7\credit_scoring_api\model\best_model.pkl"
-DATA_PATH = r"C:\Users\xwei3\OneDrive - TEN\Perso Info\DS\P7\credit_scoring_api\data\df_clients.pkl"
-THRESH_PATH = r"C:\Users\xwei3\OneDrive - TEN\Perso Info\DS\P7\credit_scoring_api\model\best_threshold.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model", "best_model.pkl")
+THRESH_PATH = os.path.join(BASE_DIR, "model", "best_threshold.json")
+FEATURES_PATH = os.path.join(BASE_DIR, "model", "feature_names.json")
 
-# 加载 LightGBM 模型
 model = joblib.load(MODEL_PATH)
 
-# 加载所有客户数据
-df_clients = joblib.load(DATA_PATH)
-
-# 加载阈值
 with open(THRESH_PATH, "r") as f:
-    threshold_dict = json.load(f)
-best_threshold = threshold_dict.get("threshold", 0.51)  # 默认0.51
+    best_threshold = json.load(f).get("threshold", 0.5)
+
+with open(FEATURES_PATH, "r") as f:
+    feature_names = json.load(f)["features"]
 
 # ----------------------------
-# 定义输入数据模型
+# Define input data model
 # ----------------------------
-class ClientID(BaseModel):
+class ClientData(BaseModel):
     client_id: int
+    features: list  # Features must follow feature_names order
 
 # ----------------------------
-# 根路径测试
+# Root test
 # ----------------------------
 @app.get("/")
 def read_root():
     return {"message": "Credit Scoring API is running"}
 
 # ----------------------------
-# 预测接口
+# Prediction endpoint
 # ----------------------------
 @app.post("/predict")
-def predict(client: ClientID):
-    # 检查客户ID是否存在
-    if client.client_id not in df_clients['SK_ID_CURR'].values:
-        raise HTTPException(status_code=404, detail="Client ID not found")
+def predict(client: ClientData):
+    if len(client.features) != len(feature_names):
+        raise HTTPException(status_code=400, detail="Feature length mismatch")
 
-    # 取出客户特征
-    X = df_clients[df_clients['SK_ID_CURR'] == client.client_id].drop(columns=['SK_ID_CURR'])
-
-    # 模型预测概率
-    proba = model.predict_proba(X)[0][1]  # 正类概率
-
-    # 根据阈值判断信用结果
+    X = pd.DataFrame([client.features], columns=feature_names)
+    proba = model.predict_proba(X)[0][1]
     prediction = "Loan NOT approved, risk of default!" if proba >= best_threshold else "Loan approved!"
 
     return {
@@ -68,6 +60,3 @@ def predict(client: ClientID):
         "threshold": best_threshold,
         "prediction": prediction
     }
-
-
-
