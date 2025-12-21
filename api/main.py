@@ -13,13 +13,6 @@ import os
 # App initialization
 # --------------------------------------------------
 app = FastAPI(title="Credit Scoring API")
-# Mount the 'dashboard' folder as static file.
-app.mount("/dashboard", StaticFiles(directory="dashboard"), name="dashboard")
-
-@app.get("/")
-def read_index():
-    return FileResponse(os.path.join("dashboard", "index.html"))
-
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -81,5 +74,6 @@ def predict(request: ClientRequest):
         "threshold": best_threshold,
         "decision": decision
     }
+
 
 
