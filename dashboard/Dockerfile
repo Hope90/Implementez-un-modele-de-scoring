@@ -9,4 +9,4 @@ COPY dashboard/ .
 COPY model/ /model/
 COPY data/ /data/
 
-CMD ["bash", "-c", "streamlit run dashboard/dashboard.py --server.port ${PORT} --server.address 0.0.0.0"]
+CMD ["bash", "-c", "export STREAMLIT_SERVER_PORT=$PORT && streamlit run dashboard/dashboard.py --server.address 0.0.0.0"]
