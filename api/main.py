@@ -25,7 +25,7 @@ DATA_PATH = os.path.join(BASE_DIR, "data", "df_clients_sample.pkl")
 model = joblib.load(MODEL_PATH)
 
 with open(THRESH_PATH, "r") as f:
-    best_threshold = json.load(f)["threshold"]
+    best_threshold = json.load(f)["best_threshold"]
 
 with open(FEATURES_PATH, "r") as f:
     feature_names = json.load(f)
@@ -72,3 +72,4 @@ def predict(request: ClientRequest):
         "threshold": best_threshold,
         "decision": decision
     }
+
