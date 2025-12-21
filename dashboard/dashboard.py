@@ -71,7 +71,7 @@ if response.status_code != 200:
 result = response.json()
 proba = result["default_probability"]
 threshold = result["threshold"]
-decision = result["prediction"]
+decision = result["decision"]
 
 # --------------------------
 # Show credit decision
