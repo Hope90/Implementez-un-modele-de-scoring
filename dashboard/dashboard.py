@@ -24,7 +24,7 @@ st.title("Prêt à Dépenser - Credit Scoring Dashboard")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 MODEL_DIR = os.path.join(BASE_DIR, "model")
-API_URL = "http://127.0.0.1:8000/predict"  # update this to your deployed API URL
+API_URL = "http://implementez-un-modele-de-scoring-production.up.railway.app/predict"  # update this to your deployed API URL
 
 # --------------------------
 # Load data
