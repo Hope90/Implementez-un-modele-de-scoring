@@ -74,6 +74,3 @@ def predict(request: ClientRequest):
         "threshold": best_threshold,
         "decision": decision
     }
-
-
-
