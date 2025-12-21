@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 MODEL_DIR = os.path.join(BASE_DIR, "model")
 
-API_URL = "http://credit-scoring-api.up.railway.app/predict"  # update this to your deployed API URL
+API_URL = "https://credit-scoring-api.up.railway.app/predict"  # update this to your deployed API URL
 
 # --------------------------
 # Load data
