@@ -25,7 +25,7 @@ This project implements:
 
 ## Deployment
 - Code versioned with GitHub
-- Ready for cloud deployment (Azure / PythonAnywhere / Railway)
+- Ready for cloud deployment (Railway)
 
 ## Author
 Hope90 for OpenClassrooms – Projet 7
