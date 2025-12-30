@@ -43,16 +43,7 @@ for col in df_clients_fe.select_dtypes(include="bool").columns:
 # --------------------------
 # Select client
 # --------------------------
-#client_id = st.selectbox("Select client ID", app_test["SK_ID_CURR"].tolist())
-client_id_input = st.text_input("Please enter a client ID", value="")
-try:
-    client_id = int(client_id_input)
-except:
-    client_id = None
-
-if client_id not in app_test["SK_ID_CURR"].values:
-    st.warning("Client ID not found in dataset.")
-    st.stop()
+client_id = st.selectbox("Select client ID", app_test["SK_ID_CURR"].tolist())
 
 # Get row indices
 client_row_raw = app_test[app_test["SK_ID_CURR"] == client_id].index[0]
