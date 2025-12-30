@@ -45,6 +45,14 @@ for col in df_clients_fe.select_dtypes(include="bool").columns:
 # --------------------------
 client_id = st.selectbox("Select client ID", app_test["SK_ID_CURR"].tolist())
 
+client_id = st.selectbox(
+    "Select a client ID",
+    options=["— Select a client —"] + client_ids
+)
+
+if client_id == "— Select a client —":
+    st.stop()
+    
 # Get row indices
 client_row_raw = app_test[app_test["SK_ID_CURR"] == client_id].index[0]
 client_row_fe = df_clients_fe[df_clients_fe["SK_ID_CURR"] == client_id].index[0]
