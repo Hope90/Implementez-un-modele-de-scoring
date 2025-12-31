@@ -29,3 +29,6 @@ This project implements:
 
 ## Author
 Hope90 for OpenClassrooms – Projet 7
+
+## Data
+https://www.kaggle.com/c/home-credit-default-risk/data
