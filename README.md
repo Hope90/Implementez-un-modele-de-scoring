@@ -32,3 +32,6 @@ Hope90 for OpenClassrooms – Projet 7
 
 ## Data
 https://www.kaggle.com/c/home-credit-default-risk/data
+
+## Kernel for feature engineering
+Example of code offering efficient feature engineering: https://www.kaggle.com/code/jsaguiar/lightgbm-with-simple-features
