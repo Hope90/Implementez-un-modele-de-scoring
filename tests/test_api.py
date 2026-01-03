@@ -1,17 +1,30 @@
-import requests
+import sys
+import os
 
-# Local Run API
-#API_URL = "http://127.0.0.1:8000/predict"
-API_URL = "credit-scoring-api.up.railway.app"
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from fastapi.testclient import TestClient
+from api.main import app
+
+client = TestClient(app)
 
 
-client_id = 100005
-response = requests.post(API_URL, json={"client_id": client_id})
+def test_health_check():
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "API is running"}
 
-if response.status_code == 200:
-    result = response.json()
-    print("Default Probability:", result["default_probability"])
-    print("Threshold:", result["threshold"])
-    print("Prediction:", result["prediction"])
-else:
-    print("API call failed with status code", response.status_code)
+
+def test_predict_valid_client():
+    response = client.post("/predict", json={"client_id": 101099})
+    assert response.status_code == 200
+
+    data = response.json()
+    assert "default_probability" in data
+    assert "threshold" in data
+    assert "decision" in data
+
+
+def test_predict_invalid_client():
+    response = client.post("/predict", json={"client_id": 999999999})
+    assert response.status_code == 404
